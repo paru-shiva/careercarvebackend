@@ -39,7 +39,7 @@ app.post("/set-mentor", async (req, res) => {
 
   try {
     const [results] = await connection.query(
-      `select * from mentors where end_time - todays_endtime > 3000 and mentor_id = ${mentor}`
+      `SELECT * FROM mentors WHERE TIMEDIFF(end_time, todays_endtime) > "00:30:00" AND mentor_id = ${mentor}`
     );
     if (results.length === 0) {
       res.send({ msg: "mentor not available" });
