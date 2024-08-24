@@ -43,18 +43,18 @@ app.post("/set-mentor", async (req, res) => {
     );
     if (results.length === 0) {
       res.send({ msg: "mentor not available" });
+    } else {
+      try {
+        const [results] = await connection.query(
+          `UPDATE mentors SET todays_endtime = ADDTIME(todays_endtime, '${session}') WHERE mentor_id = ${mentor}`
+        );
+        console.log(results);
+
+        res.send({ msg: "added successfully" });
+      } catch (err) {
+        console.log(err);
+      }
     }
-  } catch (err) {
-    console.log(err);
-  }
-
-  try {
-    const [results] = await connection.query(
-      `UPDATE mentors SET todays_endtime = ADDTIME(todays_endtime, '${session}') WHERE mentor_id = ${mentor}`
-    );
-    console.log(results);
-
-    res.send({ msg: "added successfully" });
   } catch (err) {
     console.log(err);
   }
