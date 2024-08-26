@@ -105,8 +105,10 @@ app.get("/get-default-mentor/:id", async (req, res) => {
           };
           results.push(dummbObj);
           results.push({ msg: "no members available for the selected role" });
-          console.log("executed");
-
+          const todays_endtime_obj = {
+            todays_endtime: "",
+          };
+          results.push(todays_endtime_obj);
           res.send(results);
         }
         const available_total_time = results[0].total_time;
